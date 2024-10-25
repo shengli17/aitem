@@ -7,82 +7,150 @@
     <title>Your Startup Name</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: #333;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
         header {
-            background: #4CAF50;
+            background: rgba(0, 0, 0, 0.7);
             color: #fff;
-            padding: 20px;
+            padding: 80px 20px;
             text-align: center;
+            background-size: cover;
+            background-image: url('https://via.placeholder.com/1600x900');
+            background-position: center;
+        }
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            animation: fadeIn 2s ease-in-out;
+        }
+        header p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            animation: fadeIn 3s ease-in-out;
         }
         nav {
             display: flex;
             justify-content: center;
-            background: #333;
+            background: rgba(0, 0, 0, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         nav a {
             color: #fff;
             padding: 14px 20px;
             text-decoration: none;
-            text-align: center;
+            transition: background 0.3s, color 0.3s;
         }
         nav a:hover {
-            background: #575757;
+            background: #43cea2;
+            color: #000;
         }
         section {
-            padding: 20px;
-            background: #fff;
-            margin: 20px;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 20px auto;
+            border-radius: 15px;
+            max-width: 1200px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        section:hover {
+            transform: translateY(-5px);
         }
         .services {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            gap: 20px;
+            justify-content: center;
         }
         .service {
-            background: #e3e3e3;
-            padding: 20px;
-            margin: 10px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
             flex-basis: 30%;
-            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
+        .service:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        .service h3 {
+            color: #185a9d;
+        }
+        .service p {
+            color: #666;
         }
         .contact-form {
-            background: #e3e3e3;
-            padding: 20px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: auto;
         }
         .contact-form input, .contact-form textarea {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .contact-form button {
-            background: #4CAF50;
+            background: #43cea2;
             color: #fff;
             border: none;
-            padding: 10px;
+            padding: 15px;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
         }
         .contact-form button:hover {
-            background: #45a049;
+            background: #185a9d;
+            transform: translateY(-3px);
+        }
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .hero-button {
+            background: #43cea2;
+            border: none;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hero-button:hover {
+            background: #185a9d;
+            transform: translateY(-5px);
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Your Startup Name</h1>
-        <p>Innovative Generative AI for Smarter Educational Assessment</p>
+        <p>Revolutionizing Educational Assessment with AI-Driven Innovation</p>
+        <button class="hero-button" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });">Get in Touch</button>
     </header>
     <nav>
         <a href="#about">About</a>
@@ -91,22 +159,22 @@
     </nav>
     <section id="about">
         <h2>About Us</h2>
-        <p>We develop cutting-edge generative AI tools designed to revolutionize educational assessment and test development. Our technology enables educators to create, assemble, and analyze tests with unprecedented efficiency, empowering personalized learning experiences for every student.</p>
+        <p>At Your Startup, we blend the power of AI with educational needs to create a seamless experience for educators and students. Our innovative tools automate item generation, adaptive testing, and personalized learning insights, paving the way for a smarter future in education.</p>
     </section>
     <section id="services">
         <h2>Our Services</h2>
         <div class="services">
             <div class="service">
                 <h3>AI-Driven Item Generation</h3>
-                <p>Automatically generate high-quality assessment items tailored to your curriculum and learning objectives.</p>
+                <p>Effortlessly generate diverse and curriculum-aligned assessment items, allowing you to focus on what matters most—teaching.</p>
             </div>
             <div class="service">
-                <h3>Custom Test Assembly</h3>
-                <p>Assemble balanced and reliable tests using AI algorithms that adapt to your needs.</p>
+                <h3>Adaptive Test Assembly</h3>
+                <p>Build dynamic tests that adapt to each student’s needs, ensuring a personalized and fair assessment process.</p>
             </div>
             <div class="service">
-                <h3>Personalized Learning Insights</h3>
-                <p>Gain deep insights into student performance and adapt learning pathways to optimize growth.</p>
+                <h3>Data-Driven Insights</h3>
+                <p>Leverage actionable insights to track student progress and tailor learning experiences for optimal growth and engagement.</p>
             </div>
         </div>
     </section>
