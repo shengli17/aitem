@@ -318,7 +318,7 @@
                 padding: 6rem 5% 3rem 5%;  /* 保持相同的 2:1 比例 */
             }
     }
-    
+
 
     .product-card {
         flex: 0 0 300px;
@@ -353,6 +353,95 @@
 }
 </style>
 
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: white;
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        /* 汉堡菜单图标 */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        /* 移动端样式 */
+        @media (max-width: 768px) {
+            .navbar {
+                grid-template-columns: auto 1fr auto;
+                padding: 1rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+                justify-self: end;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: white;
+                padding: 1rem;
+                gap: 1rem;
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.5rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            /* 汉堡菜单动画 */
+            .menu-toggle.active span:first-child {
+                transform: rotate(45deg) translate(7px, 7px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:last-child {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+        }
+    </style>
+
 </head>
 <body>
     <nav class="navbar">
@@ -360,9 +449,37 @@
         <div class="nav-links">
             <a href="#highlights">Highlights</a>
             <a href="#product">Products</a>
-            <a href="#contact">Contact</a>  <!-- 修改这里的 href -->
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
+
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // 点击导航链接后自动关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.menu-toggle').classList.remove('active');
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.navbar')) {
+                document.querySelector('.menu-toggle').classList.remove('active');
+                document.querySelector('.nav-links').classList.remove('active');
+            }
+        });
+    </script>
 
     <section class="hero">
         <div class="gradient-bg"></div>
