@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" href="icon.png">
     <title>AiTEM</title>
     <style>
@@ -296,6 +297,59 @@
     scroll-behavior: smooth;
 }
 </style>
+
+<style type="text/css">
+    @media (max-width: 768px) {
+    .hero {
+        padding: 0 5%;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .features,
+    .latest-products,
+    .contact {
+        padding: 3rem 5%;
+    }
+
+    .product-card {
+        flex: 0 0 300px;
+    }
+
+    .navbar {
+        padding: 1rem;
+    }
+
+    .slider-arrow.left {
+        left: 2%;
+    }
+
+    .slider-arrow.right {
+        right: 2%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        grid-template-columns: auto 1fr;
+        padding: 0.8rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+}
+</style>>
 
 </head>
 <body>
