@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png">
+    <title>AiTEM</title>
+    <style>
+        :root {
+            --primary: #0B0F1E;
+            --text: #1A1F36;
+            --light-bg: #F7F9FC;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;  /* 三列布局：左侧logo、中间导航、右侧空白 */
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+        .logo {
+            font-size: 1.4 rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 300;
+            transition: color 0.3s;
+            font-size: 0.9rem ;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    /*background: var(--light-bg);*/
+    margin-bottom: 5rem;  /* 添加这行 */
+}
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #424242;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+.features {
+    padding: 5rem 10%;
+    /*margin-bottom: 5rem;*/
+/*    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;*/
+}
+
+        .feature-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+.gradient-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('bg.png') center/cover no-repeat;
+    z-index: -1;
+}
+
+.latest-products {
+    padding: 5rem 10%;
+    background: white;
+    position: relative;
+}
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: #6e6e73;
+            font-size: 1.1rem;
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 10;
+        }
+
+        .latest-products:hover .slider-arrow {
+            opacity: 1;
+        }
+
+        .slider-arrow.left {
+            left: 5%;
+        }
+
+        .slider-arrow.right {
+            right: 5%;
+        }
+
+        .slider-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+            background: white;
+        }
+
+        .slider-arrow::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid #333;
+            border-right: 2px solid #333;
+            display: block;
+        }
+
+        .slider-arrow.left::before {
+            transform: rotate(-135deg);
+            margin-left: 4px;
+        }
+
+        .slider-arrow.right::before {
+            transform: rotate(45deg);
+            margin-right: 4px;
+        }
+
+        .product-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 2rem;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+        }
+
+        .product-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            flex: 0 0 400px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .product-subtitle {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .price-note {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+    </style>
+
+<style>
+    .features-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+</style>
+
+<style type="text/css">
+    html {
+    scroll-behavior: smooth;
+}
+</style>
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">AiTEM</div>
+        <div class="nav-links">
+            <a href="#highlights">Highlights</a>
+            <a href="#product">Products</a>
+            <a href="#contact">Contact</a>  <!-- 修改这里的 href -->
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="gradient-bg"></div>
+        <div class="hero-content">
+            <h1>Revolutionizing the Test Development Process with Generative AI</h1>
+            <p>AiTEM: A Generative AI Platform for Rapid, Cost-Effective, and High-Quality Test Development</p>
+            <a href="#contact" class="cta-button">Learn More</a>
+        </div>
+    </section>
+
+<section class="features" id="highlights">
+    <div class="section-header">
+        <h2>Core Features</h2>
+        <p>Explore how AiTEM revolutionizes test development</p>
+    </div>
+    <div class="features-cards-container">  <!-- 添加这个容器 -->
+        <div class="feature-card">
+            <h3>Efficiency Boost</h3>
+            <p>Develop GenAI tool to assist item writing and review process by reducing time & cost and improving item quality</p>
+        </div>
+        <div class="feature-card">
+            <h3>Custom Models</h3>
+            <p>Provide customized large language models for various testing programs (e.g., K-12, Bar Exams)</p>
+        </div>
+        <div class="feature-card">
+            <h3>Interactive Control</h3>
+            <p>Offer an interactive platform to control difficulty, creativity, and writing styles of generated items</p>
+        </div>
+    </div>
+</section>
+
+    <section class="latest-products" id="product">
+        <div class="section-header">
+            <h2>Our Product</h2>
+            <p>Advancements in our GenAI solutions for testing programs</p>
+        </div>
+        <div class="slider-arrow left"></div>
+        <div class="slider-arrow right"></div>
+
+        <div class="product-slider">
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="c5.webp" alt="">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">AI-Driven Platform</h3>
+                    <p class="product-subtitle">Web-based tool powered by GenAI models</p>
+                    <!-- <p class="product-price">¥29,999</p> -->
+                    <!-- <p class="price-note">可分期12期，每期¥2,499</p> -->
+                </div>
+            </div>
+
+            <style>
+                .product-image video {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .product-image img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            </style>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="c2.webp" alt="">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">User-Friendly Design</h3>
+                    <p class="product-subtitle">Interactive user interface</p>
+                    <!-- <p class="product-price">¥4,999</p> -->
+                    <!-- <p class="price-note">可分期12期，每期¥416</p> -->
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="c4.webp" alt="">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Continuous Improvement</h3>
+                    <p class="product-subtitle">Item refinement in the loop</p>
+                    <!-- <p class="product-price">¥3,999</p> -->
+                    <!-- <p class="price-note">可分期12期，每期¥333</p> -->
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <video autoplay loop muted playsinline>
+                        <source src="c1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Seamless Workflow</h3>
+                    <p class="product-subtitle">Fully integrated generation and evaluation</p>
+                </div>
+            </div>
+
+            <style>
+                .product-image video {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            </style>
+
+        </div>
+    </section>
+
+
+<!-- 在 latest-products section 后面添加以下代码 -->
+<section class="contact" id="contact">  <!-- 添加 id="contact" -->
+    <div class="section-header">
+        <h2>Contact Us</h2>
+        <p>Get in touch for more information about our solutions</p>
+    </div>
+    <form id="contactForm" class="contact-form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="submit-button">Send Message</button>
+    </form>
+</section>
+
+<!-- 添加以下 CSS 样式到 style 标签中 -->
+<style>
+.contact {
+    padding: 5rem 10%;
+    background: var(--light-bg);
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.submit-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+}
+</style>
+
+<!-- 添加以下 JavaScript 代码到 script 标签中 -->
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+        timestamp: new Date().toISOString()
+    };
+
+    // 这里可以添加发送数据到服务器的代码
+    console.log('Form submitted:', formData);
+    
+    // 清空表单
+    this.reset();
+    
+    // 显示提交成功消息
+    alert('Thank you for your message. We will get back to you soon!');
+});
+</script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.product-slider');
+            const leftArrow = document.querySelector('.slider-arrow.left');
+            const rightArrow = document.querySelector('.slider-arrow.right');
+
+            leftArrow.addEventListener('click', () => {
+                slider.scrollBy({
+                    left: -420,
+                    behavior: 'smooth'
+                });
+            });
+
+            rightArrow.addEventListener('click', () => {
+                slider.scrollBy({
+                    left: 420,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
