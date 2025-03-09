@@ -6,6 +6,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" href="icon.png">
     <title>AiTEM</title>
+
+<!-- 添加淡入动画的CSS样式 -->
+<style>
+    /* 基础淡入动画类 */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .fade-in.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* 为不同部分设置不同的延迟时间，创造序列淡入效果 */
+    .fade-delay-1 { transition-delay: 0.1s; }
+    .fade-delay-2 { transition-delay: 0.3s; }
+    .fade-delay-3 { transition-delay: 0.5s; }
+    .fade-delay-4 { transition-delay: 0.7s; }
+    
+    /* 为产品卡片创建序列动画 */
+    .product-card {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    
+    .product-card.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* 为每个产品卡片设置递增的延迟 */
+    .product-card:nth-child(1) { transition-delay: 0.1s; }
+    .product-card:nth-child(2) { transition-delay: 0.2s; }
+    .product-card:nth-child(3) { transition-delay: 0.3s; }
+    .product-card:nth-child(4) { transition-delay: 0.4s; }
+    
+    /* 为特性卡片创建序列动画 */
+    .feature-card {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    
+    .feature-card.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* 为每个特性卡片设置递增的延迟 */
+    .feature-card:nth-child(1) { transition-delay: 0.1s; }
+    .feature-card:nth-child(2) { transition-delay: 0.2s; }
+    .feature-card:nth-child(3) { transition-delay: 0.3s; }
+    .feature-card:nth-child(4) { transition-delay: 0.4s; }
+</style>
+
+<!-- 添加用于触发淡入效果的JavaScript代码 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 添加淡入类到相应元素
+        document.querySelector('.hero-content h1').classList.add('fade-in', 'fade-delay-1');
+        document.querySelector('.hero-content p').classList.add('fade-in', 'fade-delay-2');
+        document.querySelector('.hero-content .cta-button').classList.add('fade-in', 'fade-delay-3');
+        
+        // 为section标题添加淡入效果
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.classList.add('fade-in');
+        });
+        
+        // 为所有特性卡片添加淡入类 (已经在CSS中设置了)
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.classList.add('fade-in');
+        });
+        
+        // 为所有产品卡片添加淡入类 (已经在CSS中设置了)
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.classList.add('fade-in');
+        });
+        
+        // 为联系表单添加淡入效果
+        document.querySelector('.contact-form').classList.add('fade-in');
+        
+        // 页面加载后立即激活hero部分的淡入效果
+        setTimeout(function() {
+            document.querySelectorAll('.hero .fade-in').forEach(el => {
+                el.classList.add('active');
+            });
+        }, 100);
+        
+        // 设置滚动监听以触发其他元素的淡入
+        function checkFadeElements() {
+            const elements = document.querySelectorAll('.fade-in:not(.active)');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                
+                // 当元素进入视口时激活淡入效果
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        // 初始检查
+        checkFadeElements();
+        
+        // 滚动时检查
+        window.addEventListener('scroll', checkFadeElements);
+    });
+</script>
+
     <style>
         :root {
             --primary: #0B0F1E;
@@ -30,14 +144,14 @@
     top: 0;
     left: 0;
     right: 0;
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem; /* 减小上下padding从1rem到0.5rem */
     background: white;
-    /*backdrop-filter: blur(10px);*/
     display: grid;
     grid-template-columns: 200px 1fr 200px;  /* 三列布局：左侧logo、中间导航、右侧空白 */
     align-items: center;
     z-index: 1000;
     border-bottom: 1px solid rgba(0,0,0,0.1);
+    height: 50px; /* 明确设置导航栏高度 */
 }
 
 .nav-links {
@@ -46,8 +160,8 @@
     justify-content: center;
 }
         .logo {
-            font-size: 1.4 rem;
-            font-weight: 500;
+            font-size: 1rem; /* 减小logo字体大小 */
+            font-weight: 400;
             color: var(--primary);
         }
 
@@ -61,7 +175,7 @@
             color: var(--text);
             font-weight: 300;
             transition: color 0.3s;
-            font-size: 0.9rem ;
+            font-size: 0.9rem; /* 减小导航链接字体大小 */
         }
 
         .nav-links a:hover {
@@ -74,6 +188,7 @@
             align-items: center;
             padding: 5rem 10%;  /* Updated to match features section padding */
             margin-bottom: 0;   /* Removed margin */
+            padding-top: 60px; /* 增加顶部padding以适应更小的导航栏 */
         }
 
         .hero-content {
@@ -298,6 +413,7 @@
     @media (max-width: 768px) {
     .hero {
         padding: 0 5%;
+        padding-top: 50px; /* 调整顶部padding以适应更小的导航栏 */
     }
 
     .hero h1 {
@@ -325,7 +441,8 @@
     }
 
     .navbar {
-        padding: 1rem;
+        padding: 0.5rem 1rem; /* 减小移动端导航栏padding */
+        height: 45px; /* 移动端导航栏更小的高度 */
     }
 
     .slider-arrow.left {
@@ -340,7 +457,8 @@
 @media (max-width: 480px) {
     .navbar {
         grid-template-columns: auto 1fr;
-        padding: 0.8rem;
+        padding: 0.5rem; /* 更小的屏幕更小的padding */
+        height: 40px; /* 更小的屏幕上更小的导航栏高度 */
     }
 
     .nav-links {
@@ -359,13 +477,14 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 1rem 2rem;
+            padding: 0.5rem 2rem; /* 改为0.5rem减小高度 */
             background: white;
             display: grid;
             grid-template-columns: 200px 1fr 200px;
             align-items: center;
             z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.1);
+            height: 50px; /* 明确定义高度 */
         }
 
         .nav-links {
@@ -378,14 +497,14 @@
         .menu-toggle {
             display: none;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px; /* 减小间隔 */
             cursor: pointer;
-            padding: 4px;
+            padding: 3px; /* 减小padding */
         }
 
         .menu-toggle span {
             display: block;
-            width: 25px;
+            width: 22px; /* 减小宽度 */
             height: 2px;
             background-color: var(--primary);
             transition: all 0.3s ease;
@@ -395,7 +514,8 @@
         @media (max-width: 768px) {
             .navbar {
                 grid-template-columns: auto 1fr auto;
-                padding: 1rem;
+                padding: 0.5rem 1rem; /* 减小padding */
+                height: 45px; /* 移动端更小的高度 */
             }
 
             .menu-toggle {
@@ -411,8 +531,8 @@
                 right: 0;
                 flex-direction: column;
                 background: white;
-                padding: 1rem;
-                gap: 1rem;
+                padding: 0.75rem; /* 减小弹出菜单的padding */
+                gap: 0.75rem; /* 减小间隔 */
                 border-bottom: 1px solid rgba(0,0,0,0.1);
                 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             }
@@ -422,14 +542,14 @@
             }
 
             .nav-links a {
-                padding: 0.5rem 0;
+                padding: 0.4rem 0; /* 减小链接padding */
                 width: 100%;
                 text-align: center;
             }
 
             /* 汉堡菜单动画 */
             .menu-toggle.active span:first-child {
-                transform: rotate(45deg) translate(7px, 7px);
+                transform: rotate(45deg) translate(6px, 6px); /* 调整旋转点 */
             }
 
             .menu-toggle.active span:nth-child(2) {
@@ -437,8 +557,99 @@
             }
 
             .menu-toggle.active span:last-child {
-                transform: rotate(-45deg) translate(7px, -7px);
+                transform: rotate(-45deg) translate(6px, -6px); /* 调整旋转点 */
             }
+        }
+    </style>
+
+    <style>
+        .contact {
+            padding: 5rem 10%;
+            background: var(--light-bg);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: border-color 0.3s;
+            background: white;
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .form-status {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .form-status.success {
+            display: block;
+            background-color: rgba(52, 211, 153, 0.2);
+            color: #065f46;
+            border: 1px solid rgba(52, 211, 153, 0.5);
+        }
+
+        .form-status.error {
+            display: block;
+            background-color: rgba(248, 113, 113, 0.2);
+            color: #991b1b;
+            border: 1px solid rgba(248, 113, 113, 0.5);
+        }
+
+        .product-image video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 
@@ -447,7 +658,7 @@
     <nav class="navbar">
         <div class="logo">AiTEM</div>
         <div class="nav-links">
-            <a href="#highlights">Highlights</a>
+            <a href="#highlights">Features</a>
             <a href="#product">Products</a>
             <a href="#contact">Contact</a>
         </div>
@@ -486,7 +697,7 @@
         <div class="hero-content">
             <h1>Revolutionizing the Test Development Process with Generative AI</h1>
             <p>AiTEM: A Generative AI Platform for Rapid, Cost-Effective, and High-Quality Test Development</p>
-            <a href="#contact" class="cta-button">Learn More</a>
+            <a href="#highlights" class="cta-button">Learn More</a>
         </div>
     </section>
 
@@ -500,10 +711,17 @@
             <h3>Efficiency Boost</h3>
             <p>Develop GenAI tool to assist item writing and review process by reducing time & cost and improving item quality</p>
         </div>
+
         <div class="feature-card">
             <h3>Custom Models</h3>
-            <p>Provide customized large language models for various testing programs (e.g., K-12, Bar Exams)</p>
+            <p>Provide customized large language models for various testing programs, including K-12 and qualification exams</p>
         </div>
+
+        <div class="feature-card">
+            <h3>Multimodal Items</h3>
+            <p>Enable seamless creation of diverse multimodal items with images with just one click</p>
+        </div>
+
         <div class="feature-card">
             <h3>Interactive Control</h3>
             <p>Offer an interactive platform to control difficulty, creativity, and writing styles of generated items</p>
@@ -523,7 +741,7 @@
 
             <div class="product-card">
                 <div class="product-image">
-                    <img src="c5.webp" alt="">
+                    <img src="c5.jpg" alt="">
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">AI-Driven Platform</h3>
@@ -531,22 +749,9 @@
                 </div>
             </div>
 
-            <style>
-                .product-image video {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-                .product-image img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            </style>
-
             <div class="product-card">
                 <div class="product-image">
-                    <img src="c2.webp" alt="">
+                    <img src="c2.jpg" alt="">
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">User-Friendly Design</h3>
@@ -556,7 +761,7 @@
 
             <div class="product-card">
                 <div class="product-image">
-                    <img src="c4.webp" alt="">
+                    <img src="c4.jpg" alt="">
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Continuous Improvement</h3>
@@ -566,6 +771,16 @@
 
             <div class="product-card">
                 <div class="product-image">
+                    <img src="c1.gif" alt="">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Seamless Workflow</h3>
+                    <p class="product-subtitle">Fully integrated generation and evaluation</p>
+                </div>
+            </div>
+
+<!--             <div class="product-card">
+                <div class="product-image">
                     <video autoplay loop muted playsinline>
                         <source src="c1.mp4" type="video/mp4">
                     </video>
@@ -574,22 +789,11 @@
                     <h3 class="product-title">Seamless Workflow</h3>
                     <p class="product-subtitle">Fully integrated generation and evaluation</p>
                 </div>
-            </div>
-
-            <style>
-                .product-image video {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            </style>
-
+            </div> -->
         </div>
     </section>
 
-
-<!-- 在 latest-products section 后面添加以下代码 -->
-<section class="contact" id="contact">  <!-- 添加 id="contact" -->
+<section class="contact" id="contact">
     <div class="section-header">
         <h2>Contact Us</h2>
         <p>Get in touch for more information about our solutions</p>
@@ -600,118 +804,59 @@
             <input type="text" id="name" name="name" required>
         </div>
         <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="4" required></textarea>
         </div>
         <button type="submit" class="submit-button">Send Message</button>
+        <div id="formStatus" class="form-status"></div>
     </form>
 </section>
 
-<!-- 添加以下 CSS 样式到 style 标签中 -->
-<style>
-.contact {
-    padding: 5rem 10%;
-    background: var(--light-bg);
-}
-
-.contact-form {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-    background: white;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
-.submit-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.submit-button:hover {
-    transform: translateY(-2px);
-}
-</style>
-
-<!-- 添加以下 JavaScript 代码到 script 标签中 -->
 <script>
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        message: document.getElementById('message').value,
-        timestamp: new Date().toISOString()
-    };
-
-    // 这里可以添加发送数据到服务器的代码
-    console.log('Form submitted:', formData);
+    const name = document.getElementById('name').value;
+    const message = document.getElementById('message').value;
+    const statusDiv = document.getElementById('formStatus');
     
-    // 清空表单
-    this.reset();
+    // Prepare mailto link with form data
+    const mailtoLink = `mailto:sheng@aitem.us?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent('Name: ' + name + '\n\nMessage:\n' + message)}`;
     
-    // 显示提交成功消息
-    alert('Thank you for your message. We will get back to you soon!');
+    // Open the user's mail client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    statusDiv.textContent = 'Thank you! Your email client should open with your message.';
+    statusDiv.className = 'form-status success';
+    
+    // Reset form after delay
+    setTimeout(() => {
+        this.reset();
+    }, 2000);
 });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.querySelector('.product-slider');
+        const leftArrow = document.querySelector('.slider-arrow.left');
+        const rightArrow = document.querySelector('.slider-arrow.right');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.querySelector('.product-slider');
-            const leftArrow = document.querySelector('.slider-arrow.left');
-            const rightArrow = document.querySelector('.slider-arrow.right');
-
-            leftArrow.addEventListener('click', () => {
-                slider.scrollBy({
-                    left: -420,
-                    behavior: 'smooth'
-                });
-            });
-
-            rightArrow.addEventListener('click', () => {
-                slider.scrollBy({
-                    left: 420,
-                    behavior: 'smooth'
-                });
+        leftArrow.addEventListener('click', () => {
+            slider.scrollBy({
+                left: -420,
+                behavior: 'smooth'
             });
         });
-    </script>
+
+        rightArrow.addEventListener('click', () => {
+            slider.scrollBy({
+                left: 420,
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
 </body>
 </html>
