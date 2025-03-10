@@ -64,6 +64,92 @@
     .feature-card:nth-child(4) { transition-delay: 0.4s; }
 </style>
 
+<!-- 添加渐变过渡效果的CSS样式 -->
+<style>
+    /* 渐变过渡效果 */
+    .gradient-transition {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 150px;
+        background: linear-gradient(to bottom, rgba(255,255,255,0), #FFFFFF);
+        pointer-events: none;
+        z-index: 5;
+    }
+    
+    /* 调整hero部分 */
+    .hero {
+        position: relative;
+        padding-bottom: 80px; /* 为渐变腾出空间 */
+        margin-bottom: -30px; /* 创造重叠效果 */
+        min-height: 100vh; /* 确保hero部分至少占满整个视口高度 */
+        display: flex;
+        align-items: center;
+    }
+    
+    /* 调整features部分 */
+    .features {
+        position: relative;
+        background-color: #FFFFFF;
+        padding-top: 6rem;
+        z-index: 2;
+    }
+    
+    /* 添加动态下滑箭头 */
+    .scroll-arrow {
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        cursor: pointer;
+        z-index: 5;
+    }
+    
+    .scroll-arrow span {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-bottom: 2px solid white;
+        border-right: 2px solid white;
+        transform: rotate(45deg);
+        margin: -5px auto 0;
+        animation: scrollDown 2s infinite;
+    }
+    
+    @keyframes scrollDown {
+        0% {
+            opacity: 0;
+            transform: rotate(45deg) translate(-10px, -10px);
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+    }
+    
+    /* 移动端响应式调整 */
+    @media (max-width: 768px) {
+        .gradient-transition {
+            height: 100px; /* 移动端更小的渐变区域 */
+        }
+        
+        .scroll-arrow {
+            bottom: 80px;
+        }
+        
+        .hero {
+            padding-bottom: 60px;
+        }
+    }
+</style>
+
 <!-- 添加用于触发淡入效果的JavaScript代码 -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -71,6 +157,7 @@
         document.querySelector('.hero-content h1').classList.add('fade-in', 'fade-delay-1');
         document.querySelector('.hero-content p').classList.add('fade-in', 'fade-delay-2');
         document.querySelector('.hero-content .cta-button').classList.add('fade-in', 'fade-delay-3');
+        document.querySelector('.scroll-arrow').classList.add('fade-in', 'fade-delay-4');
         
         // 为section标题添加淡入效果
         document.querySelectorAll('.section-header').forEach(header => {
@@ -117,6 +204,19 @@
         
         // 滚动时检查
         window.addEventListener('scroll', checkFadeElements);
+        
+        // 为滚动箭头添加平滑滚动功能
+        document.querySelector('.scroll-arrow').addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 50,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
 </script>
 
@@ -699,6 +799,14 @@
             <p>AiTEM: A Generative AI Platform for Rapid, Cost-Effective, and High-Quality Test Development</p>
             <a href="#highlights" class="cta-button">Learn More</a>
         </div>
+        
+        <!-- 添加滚动箭头 -->
+        <a href="#highlights" class="scroll-arrow">
+            <span></span>
+        </a>
+        
+        <!-- 添加渐变过渡 -->
+        <div class="gradient-transition"></div>
     </section>
 
 <section class="features" id="highlights">
